@@ -1,0 +1,309 @@
+<div>
+  <h2>Wszystkie ogłoszenia</h2>
+
+  <div class="messages"><%- include ('./partials/messages') %></div>
+
+  <hr />
+
+  <div class="topbar">
+    <button id="toggleCollapse" class="btn btn-secondary">Filtruj</button>
+    <div class="topbar_pagination">
+      <% if (page < 2) { %>
+      <button disabled class="btn btn-info"><-</button>
+      <% } else { %>
+      <button
+        onclick="moveToPage(this)"
+        page="<%- page - 1 %>"
+        class="btn btn-info"
+      >
+        <-
+      </button>
+      <% } %>
+
+      <button disabled class="btn page btn-danger"><%- page %></button>
+
+      <% if (page < totalPages) { %>
+      <button
+        onclick="moveToPage(this)"
+        page="<%- page + 1 %>"
+        class="btn btn-info"
+      >
+        ->
+      </button>
+      <% } else { %>
+      <button disabled class="btn btn-info">-></button>
+      <% } %>
+    </div>
+    <div class="searchForm">
+      <form action="/admin/dashboard/all">
+        <input hidden name="page" value="<%- page %>" />
+        <input
+          type="search"
+          name="fraza"
+          class="form-control"
+          placeholder="Wpisz szukaną fraze..."
+        />
+        <button class="btn btn-success xm">Szukaj</button>
+      </form>
+    </div>
+  </div>
+  <div class="topbar_filtr collapse" id="filtrContainer">
+    <div class="card card-body">
+      <form action="/admin/dashboard/all" class="filtrForm">
+        <div class="input-form-container">
+          <div class="form-element">
+            <select class="form-select mb-3" name="rodzaj">
+              <option value="" selected>-- Rodzaj nieruchomości --</option>
+              <option value="działka">Działka</option>
+              <option value="mieszkanie">Mieszkanie</option>
+              <option value="lokal">Lokal</option>
+              <option value="dom">Dom</option>
+            </select>
+
+            <select class="form-select mb-3" name="typ">
+              <option value="" selected>-- Typ transakcji --</option>
+              <option value="sprzedaż">Sprzedaż</option>
+              <option value="wynajem">Wynajem</option>
+            </select>
+
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text">Gmina</span>
+              </div>
+              <input
+                class="form-control"
+                type="text"
+                name="gmina"
+                placeholder="Wpisz gmine..."
+              />
+            </div>
+
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text">Ulica</span>
+              </div>
+              <input
+                class="form-control"
+                type="text"
+                name="ulica"
+                placeholder="Wpisz ulice..."
+              />
+            </div>
+
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text">Powierzchnia Od</span>
+              </div>
+              <input
+                class="form-control"
+                type="number"
+                name="powierzchniaOd"
+                min="1"
+              />
+            </div>
+
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text">Cena Od</span>
+              </div>
+              <input
+                class="form-control"
+                type="number"
+                name="cenaOd"
+                min="1"
+                placeholder="Wpisz cene od..."
+              />
+            </div>
+          </div>
+          <div class="form-element">
+            <select class="form-select mb-3" name="wojewodztwo">
+              <option value="" selected>-- Wojewodztwo --</option>
+              <option value="dolnośląskie">Dolnośląskie</option>
+              <option value="kujawsko-pomorskie">Kujawsko - pomorskie</option>
+              <option value="lubelskie">Lubelskie</option>
+              <option value="lubuskie">Lubuskie</option>
+              <option value="łódzkie">Łódzkie</option>
+              <option value="małopolskie">Małopolskie</option>
+              <option value="mazowieckie">Mazowieckie</option>
+              <option value="opolskie">Opolskie</option>
+              <option value="podkarpackie">Podkarpackie</option>
+              <option value="podlaskie">Podlaskie</option>
+              <option value="pomorskie">Pomorskie</option>
+              <option value="śląskie">Śląskie</option>
+              <option value="świętokrzyskie">Świętokrzyskie</option>
+              <option value="warmińsko-mazurskie">Warmińsko-mazurskie</option>
+              <option value="wielkopolskie">Wielkopolskie</option>
+              <option value="zachodniopomorskie">Zachodniopomorskie</option>
+            </select>
+
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text">Powiat</span>
+              </div>
+              <input
+                class="form-control"
+                type="text"
+                name="powiat"
+                placeholder="Wpisz powiat..."
+              />
+            </div>
+
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text">Miasto</span>
+              </div>
+              <input
+                class="form-control"
+                type="text"
+                name="miasto"
+                placeholder="Wpisz miasto..."
+              />
+            </div>
+
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text">Liczba pokoi</span>
+              </div>
+              <input
+                class="form-control"
+                type="number"
+                name="liczba_pokoi"
+                min="1"
+                placeholder="Wpisz liczbe pokoi.."
+              />
+            </div>
+
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text">Powierzchnia Do</span>
+              </div>
+              <input
+                class="form-control"
+                type="number"
+                name="powierzchniaDo"
+                min="1"
+              />
+            </div>
+
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text">Cena Do</span>
+              </div>
+              <input
+                class="form-control"
+                type="number"
+                name="cenaDo"
+                min="1"
+                placeholder="Wpisz cene do..."
+              />
+            </div>
+          </div>
+        </div>
+        <div class="d-flex justify-content-between mt-3 align-content-center">
+          <button type="reset" class="btn btn-danger p-2">Czyść filtry</button>
+          <button type="submit" class="btn btn-success p-2">Filtruj</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div>
+    <!-- lista -->
+    <% if (data) { %>
+    <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Tytuł</th>
+          <th scope="col">Rodzaj</th>
+          <th scope="col">Typ</th>
+          <th scope="col">Pow.</th>
+          <th scope="col">Woj.</th>
+          <th scope="col">Powiat</th>
+          <th scope="col">Miasto</th>
+          <th scope="col">Ulica</th>
+          <th scope="col">Cena</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% data.forEach(element => { %>
+        <tr>
+          <th scope="row"><%= element.ogloszenieId%></th>
+          <td><%= element.tytul%></td>
+          <td><%= element.rodzaj%></td>
+          <td><%= element.typ%></td>
+          <td><%= element.powierzchnia%> mkw</td>
+          <td><%= element.wojewodztwo%></td>
+          <td><%= element.powiat%></td>
+          <td><%= element.miasto%></td>
+          <td><%= element.ulica%></td>
+          <td><%= element.cena%> PLN</td>
+          <td>
+            <a
+              class="btn btn-secondary"
+              href="/admin/dashboard/<%= element.ogloszenieId %>"
+              >Pokaz więcej</a
+            >
+          </td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+    <% } %>
+  </div>
+  <script>
+    function moveToPage(item) {
+      const destinationPage = item.getAttribute("page")
+      window.location.href = "/admin/dashboard/all?page=" + destinationPage
+    }
+
+    function submitForm(event) {
+      event.preventDefault()
+
+      alert("hejka")
+    }
+
+    const buttonToggle = document.getElementById("toggleCollapse")
+
+    buttonToggle.addEventListener("click", () => {
+      document.getElementById("filtrContainer").classList.toggle("show")
+    })
+  </script>
+</div>
+
+<style>
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 16px 0;
+  }
+
+  .topbar_pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .topbar_pagination > p {
+    height: 100%;
+    line-height: 40px;
+
+    text-align: center;
+    vertical-align: middle;
+    font-size: 1.2rem;
+  }
+
+  .topbar_pagination > .btn {
+    margin-right: 6px;
+  }
+
+  .searchForm > form {
+    display: flex;
+  }
+
+  .input-form-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 16px;
+  }
+</style>

@@ -1,0 +1,349 @@
+<div class="dashboardAll">
+  <form method="POST">
+    <div class="formHeader">
+      <h1 class="display-8 mb-3">Edycja ogłoszenia</h1>
+      <div class="d-flex justify-content-between align-content-center">
+        <button class="btn btn-dark" type="button" onclick="goBack()">
+          <- Powrót
+        </button>
+        <button class="btn btn-success">Edytuj</button>
+      </div>
+    </div>
+    <hr class="divider" />
+    <div class="messages"><%- include ('./partials/messages') %></div>
+    <div class="input-form-container">
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Tytuł</span>
+        </div>
+        <input
+          class="form-control"
+          type="text"
+          value="<%- ogloszenie.tytul %> "
+          name="tytul"
+          placeholder="Wpisz tytuł..."
+          required
+        />
+      </div>
+      <div class="input-group">
+        <div class="input-group-prepend opis">
+          <span class="input-group-text">Opis</span>
+        </div>
+        <textarea
+          class="form-control"
+          type="text"
+          name="opis"
+          placeholder="Wpisz opis..."
+          required
+        >
+<%- ogloszenie.opis %></textarea
+        >
+      </div>
+    </div>
+    <div class="input-form-container">
+      <div class="form-element">
+        <select class="form-select mb-3" name="rodzaj" required>
+          <option value="">-- Rodzaj nieruchomości --</option>
+          <% if (ogloszenie.rodzaj === "działka") { %>
+          <option selected value="działka">Działka</option>
+          <% } else {%>
+          <option value="działka">Działka</option>
+          <% } %> <% if (ogloszenie.rodzaj === "mieszkanie") { %>
+          <option selected value="mieszkanie">Mieszkanie</option>
+          <% } else {%>
+          <option value="mieszkanie">Mieszkanie</option>
+          <% } %> <% if (ogloszenie.rodzaj === "lokal") { %>
+          <option selected value="lokal">Lokal</option>
+          <% } else {%>
+          <option value="lokal">Lokal</option>
+          <% } %> <% if (ogloszenie.rodzaj === "dom") { %>
+          <option selected value="dom">Dom</option>
+          <% } else {%>
+          <option value="dom">Dom</option>
+          <% } %>
+        </select>
+      </div>
+      <div>
+        <select class="form-select mb-3" name="typ" required>
+          <option value="">-- Typ transakcji --</option>
+          <% if (ogloszenie.typ === "sprzedaż") { %>
+          <option selected value="sprzedaż">Sprzedaż</option>
+          <% } else {%>
+          <option value="sprzedaż">Sprzedaż</option>
+          <% } %> <% if (ogloszenie.typ === "wynajem") { %>
+          <option selected value="wynajem">Wynajem</option>
+          <% } else {%>
+          <option value="wynajem">Wynajem</option>
+          <% } %>
+        </select>
+      </div>
+    </div>
+    <div class="input-form-container">
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Powierzchnia</span>
+        </div>
+        <input
+          class="form-control"
+          type="number"
+          name="powierzchnia"
+          value="<%- ogloszenie.powierzchnia %>"
+          min="1"
+          required
+        />
+      </div>
+      <div>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Gmina</span>
+          </div>
+          <input
+            class="form-control"
+            type="text"
+            name="gmina"
+            value="<%- ogloszenie.gmina %>"
+            min="1"
+            required
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="input-form-container">
+      <div class="input-group">
+        <select class="form-select mb-3" name="wojewodztwo" required>
+          <% if (ogloszenie.wojewodztwo === "dolnośląskie") { %>
+          <option selected value="dolnośląskie">Dolnośląskie</option>
+          <% } else {%>
+          <option value="wynajem">Dolnośląskie</option>
+          <% } %> <% if (ogloszenie.wojewodztwo === "kujawsko-pomorskie") { %>
+          <option selected value="kujawsko-pomorskie">
+            Kujawsko - pomorskie
+          </option>
+          <% } else {%>
+          <option value="kujawsko-pomorskie">Kujawsko - pomorskie</option>
+          <% } %> <% if (ogloszenie.wojewodztwo === "lubelskie") { %>
+          <option selected value="lubelskie">Lubelskie</option>
+          <% } else {%>
+          <option value="lubelskie">Lubelskie</option>
+          <% } %> <% if (ogloszenie.wojewodztwo === "lubuskie") { %>
+          <option selected value="lubuskie">Lubuskie</option>
+          <% } else {%>
+          <option value="lubuskie">Lubuskie</option>
+          <% } %> <% if (ogloszenie.wojewodztwo === "łódzkie") { %>
+          <option selected value="łódzkie">Łódzkie</option>
+          <% } else {%>
+          <option value="łódzkie">Łódzkie</option>
+          <% } %> <% if (ogloszenie.wojewodztwo === "małopolskie") { %>
+          <option selected value="małopolskie">Małopolskie</option>
+          <% } else {%>
+          <option value="małopolskie">Małopolskie</option>
+          <% } %> <% if (ogloszenie.wojewodztwo === "mazowieckie") { %>
+          <option selected value="mazowieckie">Mazowieckie</option>
+          <% } else {%>
+          <option value="mazowieckie">Mazowieckie</option>
+          <% } %> <% if (ogloszenie.wojewodztwo === "opolskie") { %>
+          <option selected value="opolskie">Opolskie</option>
+          <% } else {%>
+          <option value="opolskie">Opolskie</option>
+          <% } %> <% if (ogloszenie.wojewodztwo === "podkarpackie") { %>
+          <option selected value="podkarpackie">Podkarpackie</option>
+          <% } else {%>
+          <option value="podkarpackie">Podkarpackie</option>
+          <% } %> <% if (ogloszenie.wojewodztwo === "podlaskie") { %>
+          <option selected value="podlaskie">Podlaskie</option>
+          <% } else {%>
+          <option value="podlaskie">Podlaskie</option>
+          <% } %> <% if (ogloszenie.wojewodztwo === "pomorskie") { %>
+          <option selected value="pomorskie">Pomorskie</option>
+          <% } else {%>
+          <option value="pomorskie">Pomorskie</option>
+          <% } %> <% if (ogloszenie.wojewodztwo === "śląskie") { %>
+          <option selected value="śląskie">Śląskie</option>
+          <% } else {%>
+          <option value="śląskie">Śląskie</option>
+          <% } %> <% if (ogloszenie.wojewodztwo === "świętokrzyskie") { %>
+          <option selected value="świętokrzyskie">Świętokrzyskie</option>
+          <% } else {%>
+          <option value="świętokrzyskie">Świętokrzyskie</option>
+          <% } %> <% if (ogloszenie.wojewodztwo === "warmińsko-mazurskie") { %>
+          <option selected value="warmińsko-mazurskie">
+            Warmińsko-mazurskie
+          </option>
+          <% } else {%>
+          <option value="warmińsko-mazurskie">Warmińsko-mazurskie</option>
+          <% } %> <% if (ogloszenie.wojewodztwo === "wielkopolskie") { %>
+          <option selected value="wielkopolskie">Wielkopolskie</option>
+          <% } else {%>
+          <option value="wielkopolskie">Wielkopolskie</option>
+          <% } %> <% if (ogloszenie.wojewodztwo === "zachodniopomorskie") { %>
+          <option selected value="zachodniopomorskie">
+            Zachodniopomorskie
+          </option>
+          <% } else {%>
+          <option value="zachodniopomorskie">Zachodniopomorskie</option>
+          <% } %>
+        </select>
+      </div>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Powiat</span>
+        </div>
+        <input
+          class="form-control"
+          type="text"
+          value="<%- ogloszenie.powiat  %>"
+          name="powiat"
+          placeholder="Wpisz powiat..."
+        />
+      </div>
+    </div>
+
+    <div class="input-form-container">
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Miasto</span>
+        </div>
+        <input
+          class="form-control"
+          type="text"
+          name="miasto"
+          value="<%- ogloszenie.miasto  %>"
+          placeholder="Wpisz tytuł..."
+          required
+        />
+      </div>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Ulica</span>
+        </div>
+        <input
+          class="form-control"
+          type="text"
+          value="<%- ogloszenie.ulica  %>"
+          name="ulica"
+          placeholder="Wpisz tytuł..."
+        />
+      </div>
+    </div>
+
+    <div class="input-form-container">
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Cena</span>
+        </div>
+        <input
+          class="form-control"
+          type="number"
+          name="cena"
+          value="<%- ogloszenie.cena %>"
+          min="1"
+          placeholder="Wpisz cene"
+          required
+        />
+      </div>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Liczba pokoi</span>
+        </div>
+        <input
+          class="form-control"
+          type="number"
+          name="liczba_pokoi"
+          value="<%- ogloszenie.liczba_pokoi %>"
+          min="1"
+          placeholder="Wpisz liczbe pokoi"
+          required
+        />
+      </div>
+    </div>
+  </form>
+</div>
+<% var idPassed = id;%>
+<script>
+    const id = <%= idPassed %>
+
+  function goBack(){
+   window.location.href = "/admin/dashboard/"+id
+  }
+
+    const imagesContainer = document.querySelector(".imagesThumbails")
+
+    const loadFile = function (event) {
+      const files = event.target.files
+
+      imagesContainer.innerHTML = ""
+
+      Array.prototype.forEach.call(files, function (item) {
+        const newElement = document.createElement("img")
+        newElement.src = URL.createObjectURL(item)
+        imagesContainer.appendChild(newElement)
+        newElement.onload = () => {
+          URL.revokeObjectURL(newElement.src)
+        }
+      })
+    }
+</script>
+<style>
+  .formHeader {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .dashboardAll {
+    position: relative;
+    padding: 16px;
+    background: #ededed;
+    border-radius: 0 0 8px 8px;
+  }
+
+  .dashboardAll > form {
+    padding: 6px;
+  }
+
+  .dashboardAll > form > * {
+    margin-top: 16px;
+  }
+
+  .textareaContainer > * {
+    height: auto !important;
+  }
+
+  .input-form-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .input-form-container > * {
+    flex-basis: 40%;
+  }
+
+  .imagesThumbails {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    /* padding: 16px; */
+    justify-content: space-evenly;
+    max-height: 300px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+  }
+
+  .opis > span {
+    height: 100%;
+  }
+
+  .imagesThumbails {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .imagesThumbails > img {
+    max-width: 300px;
+    margin-bottom: 26px;
+  }
+</style>

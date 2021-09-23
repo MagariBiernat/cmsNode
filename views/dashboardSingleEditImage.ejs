@@ -1,0 +1,134 @@
+<div class="dashboardAll">
+  <div class="formHeader">
+    <h1 class="display-2">Edycja zdjęć</h1>
+    <button class="btn btn-dark" onclick="goBack()"><- Powrót</button>
+    <button class="btn btn-success">Edytuj</button>
+  </div>
+  <div class="mb-5">
+    <form
+      id="newImagesForm"
+      method="POST"
+      enctype="multipart/form-data"
+      onsubmit="submitAddNewImages(event);"
+    >
+      <h2>Dodaj nowe zdjęcia</h2>
+      <div class="input-group">
+        <input
+          class="form-control"
+          type="file"
+          multiple
+          name="images"
+          onchange="loadFile(event)"
+        />
+      </div>
+      <div class="imagesThumbails"></div>
+      <button class="btn btn-success">Dodaj zdjęcia</button>
+    </form>
+  </div>
+  <div class="messages"><%- include ('./partials/messages') %></div>
+  <div>
+    <% if (images) { %>
+    <div class="images_container">
+      <% if(images.length > 0){ %> <% images.forEach(element => { %>
+      <img src="/<%- element %> " onclick="deletePicture(this)" />
+      <% }) %> <%} %>
+    </div>
+
+    <% } %>
+  </div>
+</div>
+
+<% var idPassed = id;%>
+<script>
+  const id = <%= idPassed %>
+
+  function goBack(){
+   window.location.href = "/admin/dashboard/"+id
+  }
+
+       function deletePicture(element) {
+         const elementName = "/uploads/" + element.src.split("/uploads/")[1]
+
+
+         const form = document.createElement("form")
+
+         form.method = "POST"
+         form.action = `/admin/dashboard/edit/images/delete?id=${id}&imagePathName=${elementName}`
+
+
+     if(confirm('Czy na pewno chcesz usunąć to zdjecie ?')){
+    document.body.appendChild(form);
+     	form.submit()
+     }
+       }
+
+
+       const imagesContainer = document.querySelector(".imagesThumbails")
+
+  const loadFile = function (event) {
+    const files = event.target.files
+
+    imagesContainer.innerHTML = ""
+
+    Array.prototype.forEach.call(files, function (item) {
+      const newElement = document.createElement("img")
+      newElement.src = URL.createObjectURL(item)
+      imagesContainer.appendChild(newElement)
+      newElement.onload = () => {
+        URL.revokeObjectURL(newElement.src)
+      }
+    })
+  }
+
+  function submitAddNewImages(event){
+    event.preventDefault();
+
+  const thisForm = document.querySelector('#newImagesForm')
+
+
+    thisForm.action = `/admin/dashboard/edit/images/add?id=${id}`
+
+    thisForm.submit()
+  }
+</script>
+<style>
+  .formHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .images_container {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    max-height: 300px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+  }
+
+  .images_container > img {
+    max-width: 300px;
+    padding: 28px;
+    margin-bottom: 26px;
+  }
+
+  .imagesThumbails {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    /* padding: 16px; */
+    justify-content: space-evenly;
+    max-height: 300px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+  }
+
+  .imagesThumbails > img {
+    max-width: 300px;
+    padding: 28px;
+    margin-top: 12px;
+  }
+</style>

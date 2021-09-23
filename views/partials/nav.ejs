@@ -1,0 +1,28 @@
+<nav class="nav">
+  <div class="navElement">
+    <a href="/admin/dashboard" class="btn btn-primary">Home</a>
+    <a href="/admin/dashboard/add" class="btn btn-primary">Dodaj ogłoszenie</a>
+    <a href="/admin/dashboard/all" class="btn btn-primary"
+      >Wszystkie ogłoszenia</a
+    >
+  </div>
+  <div class="navElement">
+    <a href="/admin/logout" class="btn btn-dark">Wyloguj</a>
+  </div>
+</nav>
+
+<style>
+  .nav {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 70px;
+    background: #ededed;
+    border-radius: 8px 8px 0 0;
+  }
+
+  .nav > div.navElement {
+    padding: 0 16px;
+  }
+</style>

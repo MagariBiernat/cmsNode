@@ -1,0 +1,173 @@
+<% if (ogloszenie) { %>
+<div class="ogloszenieDescription">
+  <div class="ogloszenieDescription__header">
+    <button class="btn btn-dark">
+      <a style="text-decoration: none; color: white" href="/admin/dashboard/all"
+        ><- Powrót</a
+      >
+    </button>
+
+    <form
+      action="/admin/dashboard/delete/<%- ogloszenie.ogloszenieId %>"
+      method="POST"
+      onsubmit="return deleteOgloszenie(event)"
+    >
+      <button class="btn btn-danger">Usuń</button>
+    </form>
+
+    <a
+      class="btn btn-info"
+      href="/admin/dashboard/edit/<%- ogloszenie.ogloszenieId  %>  "
+      >Edytuj</a
+    >
+  </div>
+
+  <div class="ogloszenieDescription__content">
+    <div class="ogloszenieDescription__content_container">
+      <div class="ogloszenieDescription__content__element">
+        <label>Tytuł:</label>
+        <p><%- ogloszenie.tytul %></p>
+      </div>
+      <div class="ogloszenieDescription__content__element">
+        <label>Opis:</label>
+        <p><%- ogloszenie.opis %></p>
+      </div>
+    </div>
+
+    <div class="ogloszenieDescription__content_container">
+      <div class="ogloszenieDescription__content__element">
+        <label>Rodzaj nieruchomości:</label>
+        <p><%- ogloszenie.rodzaj %></p>
+      </div>
+      <div class="ogloszenieDescription__content__element">
+        <label>Typ transakcji:</label>
+        <p><%- ogloszenie.typ %></p>
+      </div>
+      <div class="ogloszenieDescription__content__element">
+        <label>Powierzchnia:</label>
+        <p><%- ogloszenie.powierzchnia %> mkw</p>
+      </div>
+    </div>
+
+    <div class="ogloszenieDescription__content_container">
+      <div class="ogloszenieDescription__content__element">
+        <label>Wojewodztwo:</label>
+        <p><%- ogloszenie.wojewodztwo %></p>
+      </div>
+      <div class="ogloszenieDescription__content__element">
+        <label>Powiat:</label>
+        <p><%- ogloszenie.powiat %></p>
+      </div>
+      <div class="ogloszenieDescription__content__element">
+        <label>Gmina:</label>
+        <p><%- ogloszenie.gmina %></p>
+      </div>
+      <div class="ogloszenieDescription__content__element">
+        <label>Miasto:</label>
+        <p><%- ogloszenie.miasto %></p>
+      </div>
+      <div class="ogloszenieDescription__content__element">
+        <label>Ulica:</label>
+        <p><%- ogloszenie.ulica %></p>
+      </div>
+    </div>
+    <div class="ogloszenieDescription__content_container">
+      <div class="ogloszenieDescription__content__element">
+        <label>Cena:</label>
+        <p><%- ogloszenie.cena %> PLN</p>
+      </div>
+      <div class="ogloszenieDescription__content__element">
+        <label>Liczba pokoi:</label>
+        <p><%- ogloszenie.liczba_pokoi %></p>
+      </div>
+    </div>
+    <div>
+      <label style="padding: 8px">Zdjęcia:</label><br />
+      <a
+        class="btn btn-info"
+        href="/admin/dashboard/edit/images/<%- ogloszenie.ogloszenieId  %>  "
+        >Edytuj zdjęcia</a
+      >
+      <div class="ogloszenieDescription__content__element__images">
+        <% if (images) { %> <% images.forEach(element => { %>
+        <img src="../../<%- element %> " />
+        <% }) %> <% } %>
+      </div>
+    </div>
+  </div>
+</div>
+<style>
+  .ogloszenieDescription {
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    background: #ededed;
+  }
+
+  .ogloszenieDescription__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 16px;
+    margin-bottom: 5px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+  }
+
+  .ogloszenieDescription__content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .ogloszenieDescription__content_container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .ogloszenieDescription__content__element {
+    display: flex;
+    flex-direction: column;
+    padding: 8px;
+    margin-right: 44px;
+  }
+
+  label {
+    font-weight: 600;
+    font-size: 1rem;
+  }
+
+  .ogloszenieDescription__content__element > p {
+    margin-top: 12px;
+    font-weight: 300;
+    font-size: 0.9rem;
+    font-style: italic;
+  }
+
+  .ogloszenieDescription__content__element__images {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    max-height: 300px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+  }
+
+  .ogloszenieDescription__content__element__images > img {
+    max-width: 300px;
+    padding: 28px;
+    margin-bottom: 26px;
+  }
+</style>
+<script>
+  function deleteOgloszenie(event) {
+    if (!confirm("Czy jesteś pewien ze chcesz usunac ogloszenie ?")) {
+      return false
+    }
+  }
+</script>
+
+<% } %>

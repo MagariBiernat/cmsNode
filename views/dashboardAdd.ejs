@@ -1,0 +1,257 @@
+<div class="dashboardAll">
+  <form
+    action="/admin/dashboard/add"
+    method="POST"
+    enctype="multipart/form-data"
+  >
+    <div class="formHeader">
+      <h1 class="display-6">Dodawanie ogłoszenia</h1>
+      <button class="btn btn-success">Dodaj</button>
+    </div>
+    <hr class="divider" />
+    <div class="messages"><%- include ('./partials/messages') %></div>
+    <div class="input-form-container">
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Tytuł</span>
+        </div>
+        <input
+          class="form-control"
+          type="text"
+          name="tytul"
+          placeholder="Wpisz tytuł..."
+          required
+        />
+      </div>
+      <div class="input-group">
+        <div class="input-group-prepend opis">
+          <span class="input-group-text">Opis</span>
+        </div>
+        <textarea
+          class="form-control"
+          type="text"
+          name="opis"
+          placeholder="Wpisz opis..."
+          required
+        ></textarea>
+      </div>
+    </div>
+    <div class="input-form-container">
+      <div class="form-element">
+        <select class="form-select mb-3" name="rodzaj" required>
+          <option value="" selected>-- Rodzaj nieruchomości --</option>
+          <option value="działka">Działka</option>
+          <option value="mieszkanie">Mieszkanie</option>
+          <option value="lokal">Lokal</option>
+          <option value="dom">Dom</option>
+        </select>
+
+        <select class="form-select mb-3" name="typ" required>
+          <option value="" selected>-- Typ transakcji --</option>
+          <option value="sprzedaż">Sprzedaż</option>
+          <option value="wynajem">Wynajem</option>
+        </select>
+      </div>
+      <div class="form-element">
+        <select class="form-select mb-3" name="wojewodztwo" required>
+          <option value="" selected>-- Wojewodztwo --</option>
+          <option value="dolnośląskie">Dolnośląskie</option>
+          <option value="kujawsko-pomorskie">Kujawsko - pomorskie</option>
+          <option value="lubelskie">Lubelskie</option>
+          <option value="lubuskie">Lubuskie</option>
+          <option value="łódzkie">Łódzkie</option>
+          <option value="małopolskie">Małopolskie</option>
+          <option value="mazowieckie">Mazowieckie</option>
+          <option value="opolskie">Opolskie</option>
+          <option value="podkarpackie">Podkarpackie</option>
+          <option value="podlaskie">Podlaskie</option>
+          <option value="pomorskie">Pomorskie</option>
+          <option value="śląskie">Śląskie</option>
+          <option value="świętokrzyskie">Świętokrzyskie</option>
+          <option value="warmińsko-mazurskie">Warmińsko-mazurskie</option>
+          <option value="wielkopolskie">Wielkopolskie</option>
+          <option value="zachodniopomorskie">Zachodniopomorskie</option>
+        </select>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Powierzchnia</span>
+          </div>
+          <input
+            class="form-control"
+            type="number"
+            name="powierzchnia"
+            min="1"
+            required
+          />
+        </div>
+      </div>
+    </div>
+    <div class="input-form-container">
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Powiat</span>
+        </div>
+        <input
+          class="form-control"
+          type="text"
+          name="powiat"
+          placeholder="Wpisz powiat..."
+        />
+      </div>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Gmina</span>
+        </div>
+        <input
+          class="form-control"
+          type="text"
+          name="gmina"
+          placeholder="Wpisz gmine..."
+        />
+      </div>
+    </div>
+    <div class="input-form-container">
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Miasto</span>
+        </div>
+        <input
+          class="form-control"
+          type="text"
+          name="miasto"
+          placeholder="Wpisz miasto..."
+          required
+        />
+      </div>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Ulica</span>
+        </div>
+        <input
+          class="form-control"
+          type="text"
+          name="ulica"
+          placeholder="Wpisz ulice..."
+        />
+      </div>
+    </div>
+
+    <hr />
+
+    <div class="input-form-container">
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Cena</span>
+        </div>
+        <input
+          class="form-control"
+          type="number"
+          name="cena"
+          min="1"
+          placeholder="Wpisz cene..."
+          required
+        />
+      </div>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Liczba pokoi</span>
+        </div>
+        <input
+          class="form-control"
+          type="number"
+          name="liczba_pokoi"
+          min="1"
+          placeholder="Wpisz liczbe pokoi.."
+          required
+        />
+      </div>
+    </div>
+
+    <div class="input-group">
+      <input
+        class="form-control"
+        type="file"
+        multiple
+        name="images"
+        required
+        onchange="loadFile(event)"
+      />
+    </div>
+    <div class="imagesThumbails"></div>
+  </form>
+</div>
+<script>
+  const imagesContainer = document.querySelector(".imagesThumbails")
+
+  const loadFile = function (event) {
+    const files = event.target.files
+
+    imagesContainer.innerHTML = ""
+
+    Array.prototype.forEach.call(files, function (item) {
+      const newElement = document.createElement("img")
+      newElement.src = URL.createObjectURL(item)
+      imagesContainer.appendChild(newElement)
+      newElement.onload = () => {
+        URL.revokeObjectURL(newElement.src)
+      }
+    })
+  }
+</script>
+<style>
+  .formHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .dashboardAll {
+    position: relative;
+    padding: 16px;
+    background: #ededed;
+    border-radius: 0 0 8px 8px;
+  }
+
+  .dashboardAll > form {
+    padding: 6px;
+  }
+
+  .dashboardAll > form > * {
+    margin-top: 16px;
+  }
+
+  .textareaContainer > * {
+    height: auto !important;
+  }
+
+  .input-form-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .input-form-container > * {
+    flex-basis: 40%;
+  }
+
+  .imagesThumbails {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    /* padding: 16px; */
+    justify-content: space-evenly;
+    max-height: 300px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+  }
+
+  .opis > span {
+    height: 100%;
+  }
+
+  .imagesThumbails > img {
+    max-width: 300px;
+    padding: 28px;
+    margin-top: 12px;
+  }
+</style>
